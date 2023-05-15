@@ -8,13 +8,14 @@ namespace Weather_API
     {
         static void Main(string[] args)
         {
+            // Begin reading appsettings.json file for ApiKey
             var client = new HttpClient();
             IConfiguration config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();
-
             string apiKey = config.GetSection("AppSettings")["ApiKey"];
+            // End reading appsettings.json file for ApiKey
 
 
             while (true)
@@ -37,9 +38,10 @@ namespace Weather_API
 
                 JObject formattedResponse = JObject.Parse(response);
                 var temp = formattedResponse["list"][0]["main"]["temp"]; // This was a little tricky
+                var description = formattedResponse["list"][0]["weather"][0]["description"]; // This was a little tricky
 
                 //Print It
-                Console.WriteLine($"It's {temp}° outside right now. \nIt's up to you to decide what to do. \nChoose wisely.");
+                Console.WriteLine($"It's {temp}° outside right now and {description}. \nIt's up to you to decide what to do. \nChoose wisely.");
                 Console.WriteLine("==========================================\n");
 
                 // How many timess will they check the temperature? How many cites do they know the names of?
