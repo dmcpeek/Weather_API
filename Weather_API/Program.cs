@@ -1,16 +1,21 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Runtime.InteropServices;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
+using System.Data;
 
 namespace Weather_API
 {
     public class Program
     {
-        private static object FormatedResponse;
-
         static void Main(string[] args)
         {
             var client = new HttpClient();
-            var apiKey = "b738b5b25b624dca67669be7c3c605db";
+            IConfiguration config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+            string apiKey = config.GetSection("AppSettings")["ApiKey"];
+
 
             while (true)
             {
